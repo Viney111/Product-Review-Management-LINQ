@@ -11,7 +11,7 @@ namespace Product_Review_Management_LINQ
         {
             ProductReviewManager manager = new ProductReviewManager();
             List<ProductReview> productReviewFilledList = new List<ProductReview>();
-            Console.WriteLine("Enter 1 to Write all Product Review Values in Console\nEnter 2 to retrieve top 3 Records as per rating\nEnter 3 to retrieve Records with product ID & rating greater than 3\nEnter 4 to retrive record counts when grouped by ProductID\nEnter 5 to retrive product ID & Product Review");
+            Console.WriteLine("Enter 1 to Write all Product Review Values in Console\nEnter 2 to retrieve top 3 Records as per rating\nEnter 3 to retrieve Records with product ID & rating greater than 3\nEnter 4 to retrive record counts when grouped by ProductID\nEnter 5 to retrive product ID & Product Review\nEnter 6 to skip 5 records & retrieve remaining.");
             int UC = Convert.ToInt32(Console.ReadLine());
             productReviewFilledList = manager.AddingValuesInProductReviewList(productReviewFilledList);
             switch (UC)
@@ -41,7 +41,11 @@ namespace Product_Review_Management_LINQ
                     {
                         Console.WriteLine($"ProductID = {item.productID}, Review ={item.review}");
                     }
-                    break;              
+                    break;
+                case 6:
+                    var result6 = (from ProductReview in productReviewFilledList select ProductReview).Skip(5).ToList();
+                    PrintListToConsole(result6);
+                    break;
             }
         }
         public static void PrintListToConsole(List <ProductReview> printedList)
