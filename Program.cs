@@ -11,7 +11,7 @@ namespace Product_Review_Management_LINQ
         {
             ProductReviewManager manager = new ProductReviewManager();
             List<ProductReview> productReviewFilledList = new List<ProductReview>();
-            Console.WriteLine("Enter 1 to Write all Product Review Values in Console\nEnter 2 to retrieve top 3 Records as per rating\nEnter 3 to retrieve Records with product ID & rating greater than 3\nEnter 4 to retrive record counts when grouped by ProductID\nEnter 5 to retrive product ID & Product Review\nEnter 6 to skip 5 records & retrieve remaining\nEnter 7 to retrieve Product ID & review by Select LINQ\nEnter 8 to add product reviews in datatable.");
+            Console.WriteLine("Enter 1 to Write all Product Review Values in Console\nEnter 2 to retrieve top 3 Records as per rating\nEnter 3 to retrieve Records with product ID & rating greater than 3\nEnter 4 to retrive record counts when grouped by ProductID\nEnter 5 to retrive product ID & Product Review\nEnter 6 to skip 5 records & retrieve remaining\nEnter 7 to retrieve Product ID & review by Select LINQ\nEnter 8 to add product reviews in datatable\nEnter 9 to retrive Average Rating grouped by product ID from Datatable");
             int UC = Convert.ToInt32(Console.ReadLine());
             productReviewFilledList = manager.AddingValuesInProductReviewList(productReviewFilledList);
             switch (UC)
@@ -56,6 +56,20 @@ namespace Product_Review_Management_LINQ
                             Console.Write(row.ItemArray[i] + ",");
                         }
                         Console.WriteLine();
+                    }
+                    break;
+                case 9:
+                    var filledDataTable = ProductReviewManager.AddingDefaultValueswithDataTable(productReviewFilledList);
+                    var result9 = from ProductReview in filledDataTable.AsEnumerable()
+                                  group ProductReview by ProductReview.Field<int>("productID") into productReviewGroupByID
+                                  select new
+                                  {
+                                      productID = productReviewGroupByID.Key,
+                                      AverageRating = productReviewGroupByID.Average(x => x.Field<double>("rating")),
+                                  };
+                    foreach (var item in result9)
+                    {
+                        Console.WriteLine($"ProductID = {item.productID}, AverageRating = {item.AverageRating}");
                     }
                     break;
             }
