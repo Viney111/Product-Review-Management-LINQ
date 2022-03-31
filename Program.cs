@@ -14,7 +14,8 @@ namespace Product_Review_Management_LINQ
             Console.WriteLine("Enter 1 to Write all Product Review Values in Console\nEnter 2 to retrieve top 3 Records as per rating\nEnter 3 to retrieve Records with product ID & rating greater than 3" +
                 "\nEnter 4 to retrive record counts when grouped by ProductID\nEnter 5 to retrive product ID & Product Review\nEnter 6 to skip 5 records & retrieve remaining" +
                 "\nEnter 7 to retrieve Product ID & review by Select LINQ\nEnter 8 to add product reviews in datatable\nEnter 9 to retrieve records whose isLike = true"+
-                "\nEnter 10 to retrive Average Rating grouped by product ID from Datatable\nEnter 11 to retrieve records whose review message is Very Good");
+                "\nEnter 10 to retrive Average Rating grouped by product ID from Datatable\nEnter 11 to retrieve records whose review message is Very Good"+
+                "\nEnter 12 to retrive records whose userId is 10 & ordered by Product rating");
             int UC = Convert.ToInt32(Console.ReadLine());
             productReviewFilledList = manager.AddingValuesInProductReviewList(productReviewFilledList);
             var filledDataTable = ProductReviewManager.AddingDefaultValueswithDataTable(productReviewFilledList);
@@ -78,6 +79,16 @@ namespace Product_Review_Management_LINQ
                                    where ProductReview.Field<string>("review") == "Very Good"
                                    select ProductReview;
                     PrintDataTableEnumerableToConsole(result11);
+                    break;
+                case 12:
+                    var result12 = from ProductReview in filledDataTable.AsEnumerable()
+                                   orderby ProductReview.Field<double>("rating")
+                                   where ProductReview.Field<int>("userID") == 10
+                                    select ProductReview;
+                    PrintDataTableEnumerableToConsole(result12);
+                    break;
+                default:
+                    Console.WriteLine("Please enter valid choice");
                     break;
             }
         }

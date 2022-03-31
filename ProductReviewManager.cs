@@ -36,6 +36,12 @@ namespace Product_Review_Management_LINQ
             productReviewList.Add(new ProductReview() { productID = 2, userID = 7, rating = 5, review = "Very Good", isLike = true });
             productReviewList.Add(new ProductReview() { productID = 6, userID = 9, rating = 1, review = "Very Bad", isLike = false });
             productReviewList.Add(new ProductReview() { productID = 4, userID = 2, rating = 5, review = "Very Good", isLike = true });
+            productReviewList.Add(new ProductReview() { productID = 6, userID = 10, rating = 5, review = "Very Good", isLike = true });
+            productReviewList.Add(new ProductReview() { productID = 5, userID = 10, rating = 4, review = "Good", isLike = true });
+            productReviewList.Add(new ProductReview() { productID = 4, userID = 10, rating = 5, review = "Very Good", isLike = true });
+            productReviewList.Add(new ProductReview() { productID = 3, userID = 10, rating = 1, review = "Very Bad", isLike = false });
+            productReviewList.Add(new ProductReview() { productID = 2, userID = 10, rating = 2, review = "Bad", isLike = false });
+            productReviewList.Add(new ProductReview() { productID = 1, userID = 10, rating = 3, review = "Average", isLike = true });
             return productReviewList;
         }
         public static DataTable AddingDefaultValueswithDataTable(List<ProductReview> productReviews)
