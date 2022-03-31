@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,20 @@ namespace Product_Review_Management_LINQ
             productReviewList.Add(new ProductReview() { productID = 6, userID = 9, rating = 1, review = "Very Bad", isLike = false });
             productReviewList.Add(new ProductReview() { productID = 4, userID = 2, rating = 5, review = "Very Good", isLike = true });
             return productReviewList;
+        }
+        public static DataTable AddingDefaultValueswithDataTable(List<ProductReview> productReviews)
+        {
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("productID",typeof(int));
+            dataTable.Columns.Add("userID",typeof (int));
+            dataTable.Columns.Add("rating",typeof (double));
+            dataTable.Columns.Add("review");
+            dataTable.Columns.Add("isLike",typeof(bool));
+            foreach(ProductReview productReview in productReviews)
+            {
+                dataTable.Rows.Add(productReview.productID,productReview.userID,productReview.rating,productReview.review,productReview.isLike);
+            }
+            return dataTable;
         }
     }
 }
