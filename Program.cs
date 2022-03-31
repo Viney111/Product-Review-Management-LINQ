@@ -14,9 +14,10 @@ namespace Product_Review_Management_LINQ
             Console.WriteLine("Enter 1 to Write all Product Review Values in Console\nEnter 2 to retrieve top 3 Records as per rating\nEnter 3 to retrieve Records with product ID & rating greater than 3" +
                 "\nEnter 4 to retrive record counts when grouped by ProductID\nEnter 5 to retrive product ID & Product Review\nEnter 6 to skip 5 records & retrieve remaining" +
                 "\nEnter 7 to retrieve Product ID & review by Select LINQ\nEnter 8 to add product reviews in datatable\nEnter 9 to retrieve records whose isLike = true"+
-                "\nEnter 10 to retrive Average Rating grouped by product ID from Datatable");
+                "\nEnter 10 to retrive Average Rating grouped by product ID from Datatable\nEnter 11 to retrieve records whose review message is Very Good");
             int UC = Convert.ToInt32(Console.ReadLine());
             productReviewFilledList = manager.AddingValuesInProductReviewList(productReviewFilledList);
+            var filledDataTable = ProductReviewManager.AddingDefaultValueswithDataTable(productReviewFilledList);
             switch (UC)
             {
                 case 1:
@@ -51,19 +52,16 @@ namespace Product_Review_Management_LINQ
                     PrintListToConsole(result6);
                     break;
                 case 8:
-                    var result8 = ProductReviewManager.AddingDefaultValueswithDataTable(productReviewFilledList).AsEnumerable();
-                    PrintDataTableEnumerableToConsole(result8);
+                    PrintDataTableEnumerableToConsole(filledDataTable.AsEnumerable());
                     break;
                 case 9:
-                    var filledDataTable = ProductReviewManager.AddingDefaultValueswithDataTable(productReviewFilledList);
                     var result9 = from ProductReview in filledDataTable.AsEnumerable()
                                   where ProductReview.Field<bool>("isLike") == true
                                   select ProductReview;
                     PrintDataTableEnumerableToConsole(result9);
                     break;
                 case 10:
-                    var filledDataTable1 = ProductReviewManager.AddingDefaultValueswithDataTable(productReviewFilledList);
-                    var result10 = from ProductReview in filledDataTable1.AsEnumerable()
+                    var result10 = from ProductReview in filledDataTable.AsEnumerable()
                                   group ProductReview by ProductReview.Field<int>("productID") into productReviewGroupByID
                                   select new
                                   {
@@ -74,6 +72,12 @@ namespace Product_Review_Management_LINQ
                     {
                         Console.WriteLine($"ProductID = {item.productID}, AverageRating = {item.AverageRating}");
                     }
+                    break;
+                case 11:
+                    var result11 = from ProductReview in filledDataTable.AsEnumerable()
+                                   where ProductReview.Field<string>("review") == "Very Good"
+                                   select ProductReview;
+                    PrintDataTableEnumerableToConsole(result11);
                     break;
             }
         }
